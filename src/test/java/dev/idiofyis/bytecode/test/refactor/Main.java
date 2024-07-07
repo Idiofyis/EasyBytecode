@@ -17,7 +17,7 @@ public class Main {
         Program program = programFactory.createProgram(file);
 
         NameRefactorService nameRefactorService = new NameRefactorService(program);
-        nameRefactorService.refactorName("main", "a/cum");
+        nameRefactorService.refactorName("main", "a/b/c/AppropriateName");
 
         ProgramCompiler compiler = ProgramCompiler.builder().build();
         compiler.compileAndWrite(new File("workspace/output.jar"), program);
