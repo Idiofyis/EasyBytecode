@@ -1,14 +1,14 @@
 package dev.idiofyis.bytecode.tool.refactor;
 
-import dev.idiofyis.bytecode.mapping.ClassMappingGenerator;
-import dev.idiofyis.bytecode.mapping.FieldMappingGenerator;
-import dev.idiofyis.bytecode.mapping.MethodMappingGenerator;
 import dev.idiofyis.bytecode.structure.field.FieldAnalysis;
 import dev.idiofyis.bytecode.structure.field.FieldAnalysisFactory;
 import dev.idiofyis.bytecode.structure.klass.ClassAnalysis;
 import dev.idiofyis.bytecode.structure.method.MethodAnalysis;
 import dev.idiofyis.bytecode.structure.method.MethodFactory;
 import dev.idiofyis.bytecode.structure.program.Program;
+import dev.idiofyis.bytecode.tool.refactor.mapping.ClassMappingGenerator;
+import dev.idiofyis.bytecode.tool.refactor.mapping.FieldMappingGenerator;
+import dev.idiofyis.bytecode.tool.refactor.mapping.MethodMappingGenerator;
 import jakarta.inject.Inject;
 import org.objectweb.asm.commons.ClassRemapper;
 import org.objectweb.asm.commons.SimpleRemapper;
