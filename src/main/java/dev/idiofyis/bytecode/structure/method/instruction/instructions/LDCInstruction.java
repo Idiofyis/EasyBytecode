@@ -7,7 +7,7 @@ import org.objectweb.asm.tree.AbstractInsnNode;
 import org.objectweb.asm.tree.LdcInsnNode;
 import org.objectweb.asm.tree.TypeInsnNode;
 
-public record LDCInstruction(Object obj, int opcode, LdcInsnNode node, InstructionBlock block) implements Instruction<LdcInsnNode> {
+public record LDCInstruction(int opcode, LdcInsnNode node, InstructionBlock block) implements Instruction<LdcInsnNode> {
     @Override
     public int hashCode() {
         return node.hashCode();
@@ -15,6 +15,6 @@ public record LDCInstruction(Object obj, int opcode, LdcInsnNode node, Instructi
 
     @Override
     public String toString() {
-        return obj.toString();
+        return node.cst.toString();
     }
 }

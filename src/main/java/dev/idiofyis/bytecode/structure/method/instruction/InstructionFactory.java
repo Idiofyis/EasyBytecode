@@ -1,14 +1,9 @@
 package dev.idiofyis.bytecode.structure.method.instruction;
 
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.LDCInstruction;
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.LabelInstruction;
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.MethodInstruction;
+import dev.idiofyis.bytecode.structure.method.instruction.instructions.*;
 import dev.idiofyis.bytecode.tool.string.ProgramStrings;
 import org.objectweb.asm.Opcodes;
-import org.objectweb.asm.tree.AbstractInsnNode;
-import org.objectweb.asm.tree.LabelNode;
-import org.objectweb.asm.tree.LdcInsnNode;
-import org.objectweb.asm.tree.MethodInsnNode;
+import org.objectweb.asm.tree.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -32,12 +27,16 @@ public final class InstructionFactory {
         instructionFunction = new HashMap<>();
         instructionFunction.put(LdcInsnNode.class, (node, m) -> {
             if (((LdcInsnNode)node).cst instanceof String s) {
-                programStrings.cache(s, m);
+                if (programStrings != null) {
+                    programStrings.cache(s, m);
+                }
             }
-            return new LDCInstruction(((LdcInsnNode) node).cst, Opcodes.LDC, (LdcInsnNode) node, m);
+            return new LDCInstruction(Opcodes.LDC, (LdcInsnNode) node, m);
         });
         instructionFunction.put(MethodInsnNode.class, (node, m) -> new MethodInstruction(((MethodInsnNode) node), node.getOpcode(), m));
-        instructionFunction.put(LabelInstruction.class, (node, block) -> new LabelInstruction((LabelNode) node, node.getOpcode(), block));
+        instructionFunction.put(LabelNode.class, (node, block) -> new LabelInstruction((LabelNode) node, node.getOpcode(), block));
+        instructionFunction.put(InvokeDynamicInsnNode.class, (node, block) -> new IndyInstruction((InvokeDynamicInsnNode) node, node.getOpcode(), block));
+        instructionFunction.put(FieldInsnNode.class, (node, block) -> new FieldInstruction((FieldInsnNode) node, node.getOpcode(), block));
         defaultFunction = (node, m) -> new Instruction<>() {
             @Override
             public int opcode() {
