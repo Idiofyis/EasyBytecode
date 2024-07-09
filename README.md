@@ -1,2 +1,1 @@
-# EasyBytecode
-Simplify bytecode manipulation with this library
+EasyBytecode simplifies the annoying steps required when working with Bytecode through the ASM library. Things like decompiling and compiling jars, refactoring, and structural analysis are made simple with this library.
