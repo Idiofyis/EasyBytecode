@@ -18,4 +18,8 @@ public record Program(String name, JarFile jar, Collection<ClassAnalysis> classe
     public void setMainClass(ClassAnalysis classAnalysis) throws IOException {
         jar.getManifest().getMainAttributes().putValue("Main-Class", classAnalysis.computeDotName());
     }
+
+    public void addClass(ClassAnalysis classAnalysis) {
+        this.classes.add(classAnalysis);
+    }
 }

@@ -4,7 +4,6 @@ import dev.idiofyis.bytecode.structure.klass.ClassAnalysis;
 import dev.idiofyis.bytecode.structure.klass.ClassAnalysisFactory;
 import dev.idiofyis.bytecode.structure.method.MethodAnalysis;
 import dev.idiofyis.bytecode.structure.method.instruction.Instruction;
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.MethodInstruction;
 
 import java.io.File;
 import java.io.IOException;

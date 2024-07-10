@@ -4,7 +4,6 @@ import dev.idiofyis.bytecode.structure.klass.ClassAnalysis;
 import dev.idiofyis.bytecode.structure.method.instruction.Instruction;
 import dev.idiofyis.bytecode.structure.method.instruction.InstructionBlock;
 import dev.idiofyis.bytecode.structure.method.instruction.InstructionFactory;
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.LabelInstruction;
 import dev.idiofyis.bytecode.util.CollectionUtils;
 import jakarta.inject.Inject;
 import jakarta.inject.Singleton;
@@ -39,7 +38,7 @@ public final class MethodFactory {
             AbstractInsnNode node = it.next();
             if (node instanceof LabelNode label) {
                 Collection<Instruction<?>> instructions = new HashSet<>();
-                LabelInstruction labelInstruction = new LabelInstruction(label, label.getOpcode(), null);
+                Instruction<LabelNode> labelInstruction = new Instruction<>(null, label);
                 InstructionBlock instructionBlock = new InstructionBlock(labelInstruction, instructions, analysis);
 
                 int i = 1;

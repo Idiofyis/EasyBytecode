@@ -4,8 +4,8 @@ import dev.idiofyis.bytecode.structure.klass.ClassAnalysis;
 import dev.idiofyis.bytecode.structure.method.MethodAnalysis;
 import dev.idiofyis.bytecode.structure.method.instruction.Instruction;
 import dev.idiofyis.bytecode.structure.method.instruction.InstructionBlock;
-import dev.idiofyis.bytecode.structure.method.instruction.instructions.LDCInstruction;
 import dev.idiofyis.bytecode.structure.program.Program;
+import org.objectweb.asm.tree.LdcInsnNode;
 
 import java.util.Collection;
 import java.util.HashSet;
@@ -34,9 +34,9 @@ public final class ProgramStrings {
         for (ClassAnalysis klass : program.classes()) {
             for (MethodAnalysis method : klass.methods()) {
                 for (InstructionBlock block : method.blocks()) {
-                    for (Instruction<?> instruction : block.instructions()) {
-                        if (instruction instanceof LDCInstruction ldc) {
-                            if (ldc.node().cst instanceof String s) {
+                    for (Instruction instruction : block.instructions()) {
+                        if (instruction.node() instanceof LdcInsnNode ldc) {
+                            if (ldc.cst instanceof String s) {
                                 collection.add(new StringSource(block, s));
                             }
                         }

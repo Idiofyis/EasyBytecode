@@ -7,6 +7,7 @@ import org.objectweb.asm.ClassReader;
 import org.objectweb.asm.tree.ClassNode;
 import org.objectweb.asm.tree.MethodNode;
 
+import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.HashSet;
@@ -21,13 +22,7 @@ public final class ClassAnalysisFactory {
         this.methodFactory = methodFactory;
     }
 
-
-    public ClassAnalysis createClassAnalysis(JarEntry entry, JarFile jarFile) throws IOException {
-        byte[] bytes = jarFile.getInputStream(entry).readAllBytes();
-        ClassReader classReader = new ClassReader(bytes);
-        ClassNode clazz = new ClassNode();
-        classReader.accept(clazz, 0);
-
+    private ClassAnalysis fromNode(ClassNode clazz) {
         Collection<MethodAnalysis> methods = new HashSet<>();
         Collection<FieldAnalysis> fields = new HashSet<>();
 
@@ -38,5 +33,28 @@ public final class ClassAnalysisFactory {
         }
 
         return analysis;
+    }
+
+    public ClassAnalysis createClassAnalysis(JarEntry entry, JarFile jarFile) throws IOException {
+        byte[] bytes = jarFile.getInputStream(entry).readAllBytes();
+        ClassReader classReader = new ClassReader(bytes);
+        ClassNode clazz = new ClassNode();
+        classReader.accept(clazz, 0);
+
+        return fromNode(clazz);
+    }
+
+    public ClassAnalysis fromClassReference(Class<?> klass, int version, ClassLoader classLoader) throws Exception {
+        final String name = klass.getName();
+
+        Class<?> clazz = classLoader.loadClass(name);
+
+        ClassReader classReader = new ClassReader(clazz.getName());
+        ClassNode classNode = new ClassNode();
+
+        classReader.accept(classNode, 0);
+        classNode.version = version;
+
+        return fromNode(classNode);
     }
 }
