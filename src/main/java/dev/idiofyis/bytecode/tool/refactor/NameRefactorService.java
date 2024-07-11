@@ -35,10 +35,10 @@ public final class NameRefactorService {
         for (ClassAnalysis klass : program.classes()) {
             map.put(klass.name(), mappingGenerator.generateMapping(klass));
         }
-        refactorClasses(map);
+        refactor(map);
     }
 
-    public void refactorClasses(Map<String, String> map) {
+    public void refactor(Map<String, String> map) {
         final SimpleRemapper remapper = new SimpleRemapper(map);
         for (ClassAnalysis klass : program.classes()) {
             ClassNode node = klass.node();
@@ -60,9 +60,8 @@ public final class NameRefactorService {
             String desc = m.node().desc;
             remapping.put(toMethodMapping(owner, name, desc), map.get(m));
         }
-        refactorClasses(remapping);
+        refactor(remapping);
     }
-
 
     public void refactorMethods(MethodMappingGenerator mappingGenerator) {
         Map<String, String> remapping = new HashMap<>();
@@ -74,7 +73,7 @@ public final class NameRefactorService {
                 remapping.put(toMethodMapping(owner, name, desc), mappingGenerator.generateMapping(m));
             }
         }
-        refactorClasses(remapping);
+        refactor(remapping);
     }
 
     public void refactorFields(FieldMappingGenerator mappingGenerator) {
@@ -86,7 +85,7 @@ public final class NameRefactorService {
                 remapping.put(toFieldMapping(owner, name), mappingGenerator.generateMapping(f));
             }
         }
-        refactorClasses(remapping);
+        refactor(remapping);
     }
 
 

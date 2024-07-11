@@ -25,12 +25,8 @@ public class Main {
         Program program = programFactory.createProgram(file);
 
         NameRefactorService nameRefactorService = new NameRefactorService(program, methodFactory, fieldAnalysisFactory);
-        nameRefactorService.refactorMethods((m) -> {
-            if (m.node().name.equals("e")) {
-                return "o";
-            }
-            return m.node().name;
-        });
+        nameRefactorService.refactorMethods((method) -> method.node().name.toUpperCase());
+        nameRefactorService.refactor(Map.of("dev/idiofyis/Printer.print", "pront"));
 
         ProgramCompiler compiler = ProgramCompiler.builder().build();
         compiler.compileAndWrite(new File("workspace/output.jar"), program);
