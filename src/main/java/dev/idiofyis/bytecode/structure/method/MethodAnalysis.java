@@ -12,6 +12,8 @@ public record MethodAnalysis(ClassAnalysis owner, MethodNode node, Collection<In
         return this.node.name + this.node.desc;
     }
 
+    public String name() {return this.node.name;}
+
     @Override
     public int hashCode() {
         return node.hashCode();
